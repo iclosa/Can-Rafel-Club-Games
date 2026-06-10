@@ -74,6 +74,8 @@ export interface TrivialGame {
   current_round: number
   total_rounds: number
   q_number: number
+  round_q: number
+  round_category: string | null
   current_question_id: string | null
   question_started_at: string | null
   mg_state: MgState | null

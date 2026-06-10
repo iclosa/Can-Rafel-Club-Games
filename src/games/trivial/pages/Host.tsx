@@ -58,7 +58,6 @@ export default function TrivialHost() {
 
   const reveal = () => game && revealTrivial(game.id).catch((e) => console.error(e))
   const next = () => game && nextTrivial(game.id).catch((e) => console.error(e))
-  const contHorse = () => game && horseContinue(game.id).catch((e) => console.error(e))
 
   const isMinigame = phase?.startsWith('mg_')
   const isHorse = phase?.startsWith('mg_horse')
@@ -82,6 +81,20 @@ export default function TrivialHost() {
     }
   }, [phase, bomba, now, game])
 
+  // Cursa: auto-avança a la pregunta següent ~3,5 s després de revelar.
+  const horseRevealAt = useRef<{ round: number; t: number } | null>(null)
+  const horseContedRef = useRef(-1)
+  useEffect(() => {
+    if (phase !== 'mg_horse_reveal' || !game) return
+    if (!horseRevealAt.current || horseRevealAt.current.round !== game.current_round) {
+      horseRevealAt.current = { round: game.current_round, t: now }
+    }
+    if (horseContedRef.current !== game.current_round && now - horseRevealAt.current.t >= 3500) {
+      horseContedRef.current = game.current_round
+      horseContinue(game.id).catch((e) => console.error('[trivial] horse next', e))
+    }
+  }, [phase, game, now])
+
   return (
     <div className="triv triv--host">
       <button className="triv-back" onClick={() => navigate('/')}>← Menú</button>
@@ -98,7 +111,7 @@ export default function TrivialHost() {
                   ? '💣 Minijoc · La bomba'
                   : isEmoji
                     ? '😀 Minijoc · Endevina amb emojis'
-                    : `Pregunta ${game.q_number}/7`}
+                    : `Ronda ${game.q_number}/${game.total_rounds}`}
           </p>
         )}
       </header>
@@ -209,12 +222,9 @@ export default function TrivialHost() {
                 </div>
                 <div className="triv-qfoot">
                   {isHorseQ ? (
-                    <>
-                      <span className="triv-muted">{answered}/{teams.length} han respost</span>
-                      <button onClick={reveal}>Mostra el resultat</button>
-                    </>
+                    <span className="triv-muted">{answered}/{teams.length} han respost…</span>
                   ) : (
-                    <button className="triv-start" onClick={contHorse}>Següent cursa</button>
+                    <span className="triv-muted">Següent pregunta en uns segons…</span>
                   )}
                 </div>
               </div>
@@ -228,7 +238,7 @@ export default function TrivialHost() {
         <>
           <div className="triv-qcard">
             <div className="triv-qtop">
-              <span className="triv-cat">{question.category}</span>
+              <span className="triv-cat">{question.category} · pregunta {game?.round_q}/4</span>
               {isQuestion && <span className="triv-timer">{remaining}s</span>}
             </div>
             <h2 className="triv-question">{question.text}</h2>

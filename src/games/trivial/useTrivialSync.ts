@@ -115,6 +115,10 @@ export function useTrivialSync(code: string | null): TrivialSync {
       }
       if (g.current_question_id !== qId) {
         qId = g.current_question_id
+        // Buida les respostes de seguida (evita que una pregunta nova mostri el
+        // resultat per culpa de respostes velles de la pregunta anterior).
+        setAnswers([])
+        setCorrectIndex(null)
         void loadQuestion(qId)
         void refetchAnswers(g.current_round)
       }

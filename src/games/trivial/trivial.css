@@ -100,10 +100,12 @@
 }
 .triv-opt--wide { justify-content: flex-start; min-height: 58px; font-size: 1.1rem; padding: 0 18px; text-align: left; }
 .triv-shape { font-size: 1.5rem; }
-.opt-red { background: var(--red); }
-.opt-blue { background: var(--blue); }
-.opt-gold { background: var(--gold); }
-.opt-green { background: var(--green); }
+/* !important per guanyar a la regla global `.triv button` (si no, els botons
+   de resposta del mòbil sortien tots del mateix color). */
+.opt-red { background: var(--red) !important; }
+.opt-blue { background: var(--blue) !important; }
+.opt-gold { background: var(--gold) !important; }
+.opt-green { background: var(--green) !important; }
 .triv-opt.correct { outline: 4px solid #fff; transform: scale(1.02); }
 .triv-opt.dim { opacity: 0.4; }
 

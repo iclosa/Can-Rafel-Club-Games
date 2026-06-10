@@ -41,7 +41,6 @@ export default function TrivialJoin() {
           onKeyDown={(e) => e.key === 'Enter' && join()}
           placeholder="Nom de l'equip"
         />
-        <p className="triv-tip">Si sou diversos mòbils al mateix equip, poseu el mateix nom.</p>
         {error && <p className="triv-error">{error}</p>}
         <button onClick={join} disabled={!team.trim() || busy}>
           {busy ? 'Entrant…' : 'Entra'}
