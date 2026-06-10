@@ -56,7 +56,6 @@ export default function TrivialHost() {
     }
   }, [game, isQuestion, isHorseQ, teams.length, answers.length, remaining])
 
-  const reveal = () => game && revealTrivial(game.id).catch((e) => console.error(e))
   const next = () => game && nextTrivial(game.id).catch((e) => console.error(e))
 
   const isMinigame = phase?.startsWith('mg_')
@@ -65,6 +64,16 @@ export default function TrivialHost() {
   const isBomba = phase?.startsWith('mg_bomba')
   const isEmoji = phase?.startsWith('mg_emoji')
   const answered = answers.length
+
+  const mgIntro = isHorse
+    ? '🐎 Cursa de cavalls — respon ràpid: cada encert avança el teu cavall. Primer a la meta!'
+    : isPenals
+      ? '⚽ Penals — eliminatòria 1 contra 1: el xutador i el porter trien zona. Mateixa zona = aturada.'
+      : isBomba
+        ? '💣 La bomba — digues alguna cosa de la categoria i passa-la, abans que exploti a les teves mans!'
+        : isEmoji
+          ? '😀 Endevina amb emojis — el primer equip que encerta la resposta guanya punts.'
+          : null
   const champName = (id: string | null | undefined) => teams.find((t) => t.id === id)?.name ?? '—'
 
   const penals = game?.mg_state?.game === 'penals' ? game.mg_state : null
@@ -81,7 +90,7 @@ export default function TrivialHost() {
     }
   }, [phase, bomba, now, game])
 
-  // Cursa: auto-avança a la pregunta següent ~3,5 s després de revelar.
+  // Cursa: auto-avança a la pregunta següent ~1 s després de revelar.
   const horseRevealAt = useRef<{ round: number; t: number } | null>(null)
   const horseContedRef = useRef(-1)
   useEffect(() => {
@@ -89,9 +98,23 @@ export default function TrivialHost() {
     if (!horseRevealAt.current || horseRevealAt.current.round !== game.current_round) {
       horseRevealAt.current = { round: game.current_round, t: now }
     }
-    if (horseContedRef.current !== game.current_round && now - horseRevealAt.current.t >= 3500) {
+    if (horseContedRef.current !== game.current_round && now - horseRevealAt.current.t >= 1000) {
       horseContedRef.current = game.current_round
       horseContinue(game.id).catch((e) => console.error('[trivial] horse next', e))
+    }
+  }, [phase, game, now])
+
+  // Preguntes normals: auto-avança ~3 s després de revelar (sense botó manual).
+  const qRevealAt = useRef<{ round: number; t: number } | null>(null)
+  const qNextedRef = useRef(-1)
+  useEffect(() => {
+    if (phase !== 'reveal' || !game) return
+    if (!qRevealAt.current || qRevealAt.current.round !== game.current_round) {
+      qRevealAt.current = { round: game.current_round, t: now }
+    }
+    if (qNextedRef.current !== game.current_round && now - qRevealAt.current.t >= 3000) {
+      qNextedRef.current = game.current_round
+      nextTrivial(game.id).catch((e) => console.error('[trivial] next', e))
     }
   }, [phase, game, now])
 
@@ -115,6 +138,10 @@ export default function TrivialHost() {
           </p>
         )}
       </header>
+
+      {mgIntro && !phase?.includes('_done') && !phase?.includes('_boom') && (
+        <p className="triv-mg-intro">{mgIntro}</p>
+      )}
 
       {loading && <p className="triv-muted">Carregant…</p>}
 
@@ -255,13 +282,12 @@ export default function TrivialHost() {
             </div>
             {isQuestion && (
               <div className="triv-qfoot">
-                <span className="triv-muted">{answered}/{teams.length} equips han respost</span>
-                <button onClick={reveal}>Mostra el resultat</button>
+                <span className="triv-muted">{answered}/{teams.length} equips han respost…</span>
               </div>
             )}
             {phase === 'reveal' && (
               <div className="triv-qfoot">
-                <button className="triv-start" onClick={next}>Següent</button>
+                <span className="triv-muted">Següent en 3 s…</span>
               </div>
             )}
           </div>
