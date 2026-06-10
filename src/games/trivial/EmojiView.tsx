@@ -6,10 +6,9 @@ interface Props {
   mode: 'host' | 'player'
   myTeamId?: string | null
   onAnswer?: (choice: number) => void
-  onNext?: () => void
 }
 
-export default function EmojiView({ state, teams, mode, myTeamId, onAnswer, onNext }: Props) {
+export default function EmojiView({ state, teams, mode, myTeamId, onAnswer }: Props) {
   const puzzle = state.puzzles[state.idx]
   if (!puzzle) return null
   const isReveal = state.pstate === 'reveal'
@@ -44,9 +43,6 @@ export default function EmojiView({ state, teams, mode, myTeamId, onAnswer, onNe
         <p className="emoji-result">
           {state.solvedBy ? `✅ Encerta ${winnerName}! (+300)` : 'Ningú ho ha encertat 😅'}
         </p>
-      )}
-      {mode === 'host' && isReveal && (
-        <button className="triv-start" onClick={onNext}>Següent</button>
       )}
     </div>
   )

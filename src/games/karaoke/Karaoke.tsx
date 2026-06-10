@@ -77,6 +77,13 @@ export default function Karaoke() {
     activeRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' })
   }, [cur])
 
+  // Línia actual i la següent, per al plafó destacat "Ara canta".
+  const curLine = synced && cur >= 0 ? synced[cur] : null
+  const nextLine = synced && cur + 1 < synced.length ? synced[cur + 1] : null
+  // Compte enrere fins a la línia següent (per anticipar-se a cantar).
+  const msToNext = nextLine ? Math.max(0, nextLine.time - posMs) : null
+  const startingSoon = msToNext != null && msToNext <= 1200
+
   const backToList = () => {
     pause().catch(() => {})
     playedRef.current = null
@@ -139,6 +146,21 @@ export default function Karaoke() {
           {nowPlaying?.paused ? '▶️' : '⏸'}
         </button>
       </div>
+
+      {!lyricsLoading && synced && (
+        <div className="kar-focus">
+          <span className="kar-focus-label">🎤 Ara canta</span>
+          <p className={`kar-focus-cur${curLine ? '' : ' waiting'}`}>
+            {curLine ? curLine.text || '♪' : '♪ …'}
+          </p>
+          {nextLine && (
+            <p className={`kar-focus-next${startingSoon ? ' soon' : ''}`}>
+              {startingSoon && '▶ '}
+              {nextLine.text || '♪'}
+            </p>
+          )}
+        </div>
+      )}
 
       <div className="kar-lyrics">
         {lyricsLoading && <p className="kar-msg">Carregant la lletra…</p>}

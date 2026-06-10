@@ -56,8 +56,6 @@ export default function TrivialHost() {
     }
   }, [game, isQuestion, isHorseQ, teams.length, answers.length, remaining])
 
-  const next = () => game && nextTrivial(game.id).catch((e) => console.error(e))
-
   const isMinigame = phase?.startsWith('mg_')
   const isHorse = phase?.startsWith('mg_horse')
   const isPenals = phase?.startsWith('mg_penals')
@@ -70,7 +68,7 @@ export default function TrivialHost() {
     : isPenals
       ? '⚽ Penals — eliminatòria 1 contra 1: el xutador i el porter trien zona. Mateixa zona = aturada.'
       : isBomba
-        ? '💣 La bomba — digues alguna cosa de la categoria i passa-la, abans que exploti a les teves mans!'
+        ? "💣 La bomba — qui la té ha de respondre BÉ una pregunta per passar-la. Si falla la conserva… i pot explotar a les seves mans!"
         : isEmoji
           ? '😀 Endevina amb emojis — el primer equip que encerta la resposta guanya punts.'
           : null
@@ -118,6 +116,46 @@ export default function TrivialHost() {
     }
   }, [phase, game, now])
 
+  // Auto-avanç general dels minijocs: cap botó manual de "Continua".
+  const autoAt = useRef<{ key: string; t: number } | null>(null)
+  const autoFired = useRef<string>('')
+  useEffect(() => {
+    if (!game) return
+    let key: string | null = null
+    let delay = 0
+    let action: (() => Promise<unknown>) | null = null
+
+    if (phase === 'mg_penals' && penals && penals.duelPhase === 'result') {
+      key = `pk-${penals.round}-${penals.mi}-${penals.shotNo}`
+      delay = 2500
+      action = () => penalsAdvance(game.id)
+    } else if (phase === 'mg_penals_done') {
+      key = 'pk-done'; delay = 4500; action = () => nextTrivial(game.id)
+    } else if (phase === 'mg_bomba_boom') {
+      key = `bomba-boom-${bomba?.loser ?? ''}`; delay = 3000; action = () => bombaRearm(game.id)
+    } else if (phase === 'mg_bomba_done') {
+      key = 'bomba-done'; delay = 4500; action = () => nextTrivial(game.id)
+    } else if (phase === 'mg_emoji' && emoji && emoji.pstate === 'reveal') {
+      key = `emoji-${emoji.idx}`; delay = 3000; action = () => emojiNext(game.id)
+    } else if (phase === 'mg_emoji_done') {
+      key = 'emoji-done'; delay = 4500; action = () => nextTrivial(game.id)
+    } else if (phase === 'mg_horse_done') {
+      key = 'horse-done'; delay = 4500; action = () => nextTrivial(game.id)
+    }
+
+    if (!key || !action) {
+      autoAt.current = null
+      return
+    }
+    if (!autoAt.current || autoAt.current.key !== key) {
+      autoAt.current = { key, t: now }
+    }
+    if (autoFired.current !== key && now - autoAt.current.t >= delay) {
+      autoFired.current = key
+      action().catch((e) => console.error('[trivial] auto-advance', e))
+    }
+  }, [phase, game, penals, bomba, emoji, now])
+
   return (
     <div className="triv triv--host">
       <button className="triv-back" onClick={() => navigate('/')}>← Menú</button>
@@ -159,16 +197,11 @@ export default function TrivialHost() {
         <div className="triv-qcard triv-center">
           <h2 className="triv-question">⚽ Campió dels penals!</h2>
           <p><strong>{champName(penals?.champion ?? teams[0]?.id)}</strong> (+1500)</p>
-          <button className="triv-start" onClick={next}>Continua la partida</button>
+          <p className="triv-muted">Continua la partida en uns segons…</p>
         </div>
       )}
       {game?.status === 'playing' && phase === 'mg_penals' && penals && (
-        <PenalsView
-          state={penals}
-          teams={teams}
-          mode="host"
-          onAdvance={() => game && penalsAdvance(game.id).catch((e) => console.error(e))}
-        />
+        <PenalsView state={penals} teams={teams} mode="host" />
       )}
 
       {/* MINIJOC: LA BOMBA */}
@@ -176,14 +209,14 @@ export default function TrivialHost() {
         <div className="triv-qcard triv-center">
           <h2 className="triv-question">💣 Sobreviu!</h2>
           <p>Guanya <strong>{champName(bomba?.champion ?? teams[0]?.id)}</strong> (+1500)</p>
-          <button className="triv-start" onClick={next}>Continua la partida</button>
+          <p className="triv-muted">Continua la partida en uns segons…</p>
         </div>
       )}
       {game?.status === 'playing' && phase === 'mg_bomba_boom' && (
         <div className="triv-qcard triv-center">
           <h2 className="triv-question">💥 BOOM!</h2>
           <p>Eliminat: <strong>{champName(bomba?.loser ?? null)}</strong></p>
-          <button className="triv-start" onClick={() => game && bombaRearm(game.id)}>Continua</button>
+          <p className="triv-muted">Segueix el joc en uns segons…</p>
         </div>
       )}
       {game?.status === 'playing' && phase === 'mg_bomba' && bomba && (
@@ -195,17 +228,10 @@ export default function TrivialHost() {
         phase === 'mg_emoji_done' ? (
           <div className="triv-qcard triv-center">
             <h2 className="triv-question">😀 Emojis acabats!</h2>
-            <button className="triv-start" onClick={next}>Continua la partida</button>
+            <p className="triv-muted">Continua la partida en uns segons…</p>
           </div>
         ) : (
-          emoji && (
-            <EmojiView
-              state={emoji}
-              teams={teams}
-              mode="host"
-              onNext={() => game && emojiNext(game.id)}
-            />
-          )
+          emoji && <EmojiView state={emoji} teams={teams} mode="host" />
         )
       )}
 
@@ -224,7 +250,7 @@ export default function TrivialHost() {
                 </strong>{' '}
                 (+1500)
               </p>
-              <button className="triv-start" onClick={next}>Continua la partida</button>
+              <p className="triv-muted">Continua la partida en uns segons…</p>
             </div>
           ) : (
             question && (

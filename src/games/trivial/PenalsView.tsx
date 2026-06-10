@@ -11,10 +11,9 @@ interface Props {
   mode: 'host' | 'player'
   myTeamId?: string | null
   onChoose?: (zone: number) => void
-  onAdvance?: () => void
 }
 
-export default function PenalsView({ state, teams, mode, myTeamId, onChoose, onAdvance }: Props) {
+export default function PenalsView({ state, teams, mode, myTeamId, onChoose }: Props) {
   const name = (id: string | null) => teams.find((t) => t.id === id)?.name ?? '—'
   const m = state.matches[state.mi]
   if (!m) return <p className="pk-msg">Preparant el duel…</p>
@@ -65,14 +64,9 @@ export default function PenalsView({ state, teams, mode, myTeamId, onChoose, onA
       </div>
 
       {isResult ? (
-        <>
-          <p className={`pk-result ${state.lastResult?.goal ? 'goal' : 'save'}`}>
-            {state.lastResult?.goal ? '⚽ GOL!' : '🧤 ATURADA!'}
-          </p>
-          {mode === 'host' && (
-            <button className="triv-start" onClick={onAdvance}>Següent xut</button>
-          )}
-        </>
+        <p className={`pk-result ${state.lastResult?.goal ? 'goal' : 'save'}`}>
+          {state.lastResult?.goal ? '⚽ GOL!' : '🧤 ATURADA!'}
+        </p>
       ) : mode === 'player' ? (
         myRole ? (
           myChosen ? (

@@ -2,7 +2,7 @@ import '../trivial.css'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTrivialSync } from '../useTrivialSync'
-import { bombaPass, emojiAnswer, penalsChoose, submitTrivialAnswer } from '../trivialService'
+import { bombaAnswer, emojiAnswer, penalsChoose, submitTrivialAnswer } from '../trivialService'
 import PenalsView from '../PenalsView'
 import BombaView from '../BombaView'
 import EmojiView from '../EmojiView'
@@ -110,7 +110,7 @@ export default function TrivialPlay() {
           teams={teams}
           mode="player"
           myTeamId={teamId}
-          onPass={() => game && bombaPass(game.id, teamId).catch((e) => console.error(e))}
+          onAnswer={(c) => game && bombaAnswer(game.id, teamId, c).catch((e) => console.error(e))}
         />
       )}
       {(phase === 'mg_bomba_boom' || phase === 'mg_bomba_done') && (

@@ -69,9 +69,13 @@ export async function penalsAdvance(gameId: string): Promise<void> {
   if (error) throw error
 }
 
-// La bomba
-export async function bombaPass(gameId: string, teamId: string): Promise<void> {
-  const { error } = await db().rpc('trivial_bomba_pass', { p_game_id: gameId, p_team_id: teamId })
+// La bomba — el qui la té contesta una pregunta; si encerta, la passa.
+export async function bombaAnswer(gameId: string, teamId: string, choice: number): Promise<void> {
+  const { error } = await db().rpc('trivial_bomba_answer', {
+    p_game_id: gameId,
+    p_team_id: teamId,
+    p_choice: choice,
+  })
   if (error) throw error
 }
 export async function bombaExplode(gameId: string): Promise<void> {

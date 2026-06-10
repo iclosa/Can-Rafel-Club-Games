@@ -172,7 +172,7 @@
 .bomba { width: 100%; max-width: 480px; background: var(--panel); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
 .bomba-cat { font-size: 1.2rem; margin: 0; }
 .bomba-cat strong { color: #ffd23f; }
-.bomba-ball { font-size: 4.5rem; line-height: 1; animation: bomba-shake 0.5s infinite; }
+.bomba-ball { font-size: 3.4rem; line-height: 1; animation: bomba-shake 0.5s infinite; }
 .bomba-ball.mine { animation: bomba-shake 0.18s infinite; }
 @keyframes bomba-shake {
   0%,100% { transform: rotate(-6deg) scale(1); }
@@ -180,6 +180,8 @@
 }
 .bomba-holder { margin: 0; font-size: 1.05rem; }
 .bomba-holder strong { color: #ff4d8d; }
+.bomba-q { margin: 4px 0 8px; font-size: 1.25rem; line-height: 1.25; }
+.bomba .triv-opts { width: 100%; }
 .bomba-pass { background: #e21b3c !important; box-shadow: 0 4px 0 #a01228 !important; font-size: 1.3rem !important; padding: 18px 24px !important; }
 .bomba-alive { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .bomba-chip { background: rgba(255,255,255,0.12); border-radius: 999px; padding: 6px 14px; font-weight: 600; font-size: 0.9rem; }

@@ -40,13 +40,15 @@ export interface PenalsState {
 
 export interface BombaState {
   game: 'bomba'
-  category: string
   alive: string[]
   turnIdx: number
   explodeAt: number
   exploded: boolean
   loser: string | null
   champion: string | null
+  qid: string
+  qtext: string
+  qoptions: string[]
 }
 
 export interface EmojiPuzzle {
