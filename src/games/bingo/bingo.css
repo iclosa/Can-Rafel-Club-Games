@@ -1,0 +1,543 @@
+/* Bingo Musical · estil propi (cartell Club Esportiu Can Rafel): blau marí,
+   taronja i cel de piscina. No comparteix res amb Hitster ni amb la landing. */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap');
+
+.bingo {
+  --navy: #0d2b4e;
+  --navy2: #14365c;
+  --orange: #f5821f;
+  --orange2: #ff7a00;
+  --sky: #4aa8e0;
+  min-height: 100vh;
+  padding: 24px 18px 60px;
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  color: var(--navy);
+  background: linear-gradient(180deg, #aee3fb 0%, #5bb8ec 55%, #2e8fd6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.bingo button {
+  font-family: inherit;
+  border: none;
+  border-radius: 14px;
+  background: var(--orange);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 18px;
+  box-shadow: 0 4px 0 #c85f00;
+  transition: transform 0.1s, background 0.15s;
+}
+.bingo button:hover:not(:disabled) {
+  background: var(--orange2);
+}
+.bingo button:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #c85f00;
+}
+.bingo button:disabled {
+  opacity: 0.5;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.bingo-back {
+  align-self: flex-start;
+  background: var(--navy) !important;
+  box-shadow: 0 4px 0 #07203c !important;
+  font-size: 0.9rem !important;
+  padding: 8px 16px !important;
+}
+
+.bingo-head {
+  text-align: center;
+}
+.bingo-kicker {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--navy);
+  background: #fff;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+.bingo-logo {
+  font-size: clamp(2.6rem, 9vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  margin: 0;
+  color: var(--navy);
+  text-shadow: 2px 2px 0 #fff;
+}
+.bingo-logo span {
+  color: var(--orange);
+}
+.bingo-logo--sm {
+  font-size: clamp(1.8rem, 6vw, 2.6rem);
+}
+.bingo-room {
+  margin: 6px 0 0;
+  font-weight: 700;
+  color: var(--navy2);
+}
+.bingo-room strong {
+  color: var(--orange);
+  letter-spacing: 0.15em;
+}
+
+.bingo-alert {
+  background: #fff3cd;
+  border: 1px solid #f0c000;
+  color: #7a5a00;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 600;
+}
+
+/* ── Lobby ── */
+.bingo-lobby {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 760px;
+}
+.bingo-panel {
+  background: #fff;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.bingo-panel h2 {
+  margin: 0 0 12px;
+  color: var(--navy);
+}
+.bingo-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.bingo-qr-frame {
+  background: #fff;
+  padding: 8px;
+  border-radius: 12px;
+  line-height: 0;
+}
+.bingo-hint {
+  color: var(--navy2);
+  font-size: 0.9rem;
+  margin: 12px 0;
+}
+.bingo-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 12px;
+  padding: 8px 22px;
+}
+.bingo-code span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.bingo-code strong {
+  font-size: 2rem;
+  letter-spacing: 0.15em;
+  color: var(--orange);
+}
+.bingo-players {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.bingo-players li {
+  background: #eaf6ff;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 600;
+}
+.bingo-muted {
+  color: var(--navy2);
+  opacity: 0.8;
+}
+.bingo-cards-gen {
+  border-top: 1px solid #e3e3e3;
+  margin-top: 14px;
+  padding-top: 14px;
+}
+.bingo-cards-gen h3 {
+  margin: 0 0 10px;
+}
+.bingo-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.bingo-row input {
+  width: 80px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid var(--sky);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+.bingo-start {
+  width: 100%;
+  margin-top: 16px;
+  background: var(--navy) !important;
+  box-shadow: 0 4px 0 #07203c !important;
+  font-size: 1.1rem !important;
+  padding: 16px !important;
+}
+
+/* ── Join ── */
+.bingo--join {
+  justify-content: center;
+}
+.bingo-joinform {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.bingo-joinform label {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.bingo-joinform input {
+  padding: 14px;
+  border-radius: 12px;
+  border: 2px solid var(--sky);
+  font-family: inherit;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.bingo-error {
+  color: #d33;
+  font-weight: 600;
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+/* ── Play (cartró digital) ── */
+.bingo--play {
+  gap: 12px;
+}
+.bingo-head--sm {
+  margin-top: 4px;
+}
+.bingo-note {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+.bingo-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 460px;
+}
+.bingo-cell-btn {
+  aspect-ratio: 1;
+  background: #fff !important;
+  color: var(--navy) !important;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15) !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+}
+.bingo-cell-btn.marked {
+  background: var(--orange) !important;
+  color: #fff !important;
+}
+.bcell-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: center;
+}
+.bcell-artist {
+  font-size: 0.58rem;
+  opacity: 0.8;
+  text-align: center;
+}
+.bingo-feedback {
+  font-weight: 800;
+  font-size: 1.3rem;
+  background: #fff;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+.bingo-claim-row {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 460px;
+}
+.bingo-claim-row button {
+  flex: 1;
+}
+.bingo-claim-row .primary {
+  background: var(--navy);
+  box-shadow: 0 4px 0 #07203c;
+}
+.bingo-win-screen {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Host (bombo) ── */
+.bingo-spotify {
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+}
+.bingo-now {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.bingo-now-label {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0;
+}
+.bingo-now-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--orange);
+  margin: 0;
+}
+.bingo-reveal {
+  background: #eaf6ff !important;
+  color: var(--navy) !important;
+  box-shadow: none !important;
+  font-size: 0.85rem !important;
+  padding: 6px 14px !important;
+}
+.bingo-controls {
+  justify-content: center;
+}
+.bingo-next {
+  font-size: 1.2rem !important;
+  padding: 16px 28px !important;
+}
+.bingo-sync {
+  background: var(--sky) !important;
+  box-shadow: 0 4px 0 #2a7bb0 !important;
+  font-size: 0.85rem !important;
+  padding: 8px 14px !important;
+}
+.bingo-wins {
+  background: #d8f5e0;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 700;
+  color: #1c7a3e;
+}
+.bingo-board-title {
+  margin: 8px 0 0;
+  color: #fff;
+  text-shadow: 1px 1px 0 var(--navy);
+}
+.bingo-board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 760px;
+  justify-content: center;
+}
+.bingo-ball {
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.bingo-ball strong {
+  background: var(--navy);
+  color: #fff;
+  border-radius: 999px;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+.bingo-ball.current {
+  background: var(--orange);
+  color: #fff;
+}
+.bingo-ball.current strong {
+  background: #fff;
+  color: var(--orange);
+}
+
+/* ── Impressió de cartrons ── */
+.bingo-print-page {
+  min-height: 100vh;
+  background: #eef3f8;
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  color: #0d2b4e;
+}
+.bingo-print-toolbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  background: #0d2b4e;
+  color: #fff;
+}
+.bingo-print-toolbar button {
+  font-family: inherit;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-weight: 700;
+  background: #fff;
+  color: #0d2b4e;
+  cursor: pointer;
+}
+.bingo-print-toolbar .primary {
+  background: #f5821f;
+  color: #fff;
+}
+.bingo-print-sheet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+.print-card {
+  width: 18cm;
+  max-width: 100%;
+  background: #fff;
+  border: 3px solid #0d2b4e;
+  border-radius: 12px;
+  padding: 14px;
+  box-sizing: border-box;
+}
+.print-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+.print-card-logo {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #f5821f;
+}
+.print-card-serial {
+  font-weight: 800;
+  color: #0d2b4e;
+}
+.print-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.print-cell {
+  border: 1.5px solid #0d2b4e;
+  border-radius: 8px;
+  padding: 6px 4px;
+  min-height: 2.6cm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+}
+.print-cell-title {
+  font-weight: 700;
+  font-size: 0.78rem;
+  line-height: 1.05;
+}
+.print-cell-artist {
+  font-size: 0.66rem;
+  opacity: 0.75;
+}
+.print-card-foot {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #0d2b4e;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+  .bingo-print-toolbar {
+    display: none;
+  }
+  .bingo-print-page {
+    background: #fff;
+  }
+  .bingo-print-sheet {
+    padding: 0;
+    gap: 0.6cm;
+  }
+  .print-card {
+    width: 100%;
+    height: 13.2cm;
+    page-break-inside: avoid;
+    border-radius: 0;
+  }
+  .print-cell {
+    min-height: 0;
+    height: 2.4cm;
+  }
+}

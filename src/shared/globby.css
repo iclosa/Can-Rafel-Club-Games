@@ -1,0 +1,255 @@
+/* Maqueta de lobby compartida (mateixes dimensions per a tots els jocs).
+   L'ESTRUCTURA i les dimensions són comunes; el TEMA (colors/fonts) el posa
+   cada classe globby--<joc> via variables. Importat només pels lobbys. */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Baloo+2:wght@500;700;800&family=Inter:wght@400;600;700&family=Montserrat:wght@600;700;800&display=swap');
+
+.globby {
+  --g-bg: #0a0a0a;
+  --g-text: #f5f5f5;
+  --g-muted: #9a9a9a;
+  --g-panel: #161616;
+  --g-border: #2a2a2a;
+  --g-accent: #e63946;
+  --g-title: #ffffff;
+  --g-font: 'Inter', system-ui, sans-serif;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 28px clamp(16px, 4vw, 56px) 48px;
+  background: var(--g-bg);
+  color: var(--g-text);
+  font-family: var(--g-font);
+}
+
+.globby-back {
+  align-self: flex-start;
+  background: rgba(127, 127, 127, 0.18);
+  border: 1px solid var(--g-border);
+  color: var(--g-text);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.globby-head {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.globby-kicker {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--g-muted);
+  margin-bottom: 10px;
+}
+.globby-title {
+  font-family: var(--g-title-font, var(--g-font));
+  font-size: clamp(2.8rem, 9vw, 6rem);
+  line-height: 1;
+  margin: 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--g-title);
+}
+.globby-sub {
+  color: var(--g-muted);
+  font-size: 1.05rem;
+  margin: 14px auto 0;
+  max-width: 560px;
+  line-height: 1.4;
+}
+
+.globby-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+@media (max-width: 880px) {
+  .globby-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.globby-panel {
+  background: var(--g-panel);
+  border: 1px solid var(--g-border);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+}
+.globby-qr {
+  align-items: center;
+  text-align: center;
+}
+.globby-qr-frame {
+  background: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  line-height: 0;
+}
+.globby-hint {
+  margin: 20px 0 24px;
+  color: var(--g-muted);
+  font-size: 0.95rem;
+}
+.globby-code {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--g-border);
+  border-radius: 14px;
+  padding: 14px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 220px;
+}
+.globby-code span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--g-muted);
+}
+.globby-code strong {
+  font-size: 2.5rem;
+  letter-spacing: 0.15em;
+  color: var(--g-accent);
+  line-height: 1;
+}
+
+/* Contingut del panell dret (per joc, classes comunes) */
+.globby-content h2 {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.globby-muted {
+  color: var(--g-muted);
+}
+.globby-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
+  align-content: start;
+}
+.globby-chip {
+  background: rgba(127, 127, 127, 0.16);
+  border: 1px solid var(--g-border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 600;
+}
+.globby-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0;
+}
+.globby-input {
+  width: 90px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid var(--g-border);
+  background: rgba(127, 127, 127, 0.1);
+  color: var(--g-text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+.globby-btn,
+.globby-secondary {
+  font-family: inherit;
+  border: none;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 14px 18px;
+  transition: filter 0.15s, transform 0.1s;
+}
+.globby-btn {
+  margin-top: auto;
+  background: var(--g-accent);
+  color: #fff;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.globby-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.globby-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.globby-secondary {
+  background: rgba(127, 127, 127, 0.2);
+  color: var(--g-text);
+  font-size: 0.95rem;
+}
+.globby-alert {
+  max-width: 1200px;
+  margin: 0 auto 16px;
+  width: 100%;
+  background: rgba(244, 196, 48, 0.12);
+  border: 1px solid rgba(244, 196, 48, 0.55);
+  border-radius: 12px;
+  padding: 12px 18px;
+  color: #f4c430;
+}
+
+/* ── Temes per joc ── */
+.globby--hitster {
+  --g-bg: radial-gradient(circle at 15% 20%, rgba(230,57,70,0.18), transparent 45%),
+          radial-gradient(circle at 85% 80%, rgba(244,196,48,0.08), transparent 50%), #0a0a0a;
+  --g-text: #f5f5f5;
+  --g-panel: #161616;
+  --g-border: #2a2a2a;
+  --g-accent: #e63946;
+  --g-title: transparent;
+  --g-title-font: 'Audiowide', sans-serif;
+}
+.globby--hitster .globby-title {
+  -webkit-text-stroke: 2.5px #ff2e8b;
+  text-shadow: 0 0 4px #ff2e8b, 0 0 10px rgba(255, 46, 139, 0.6);
+}
+
+.globby--bingo {
+  --g-bg: linear-gradient(180deg, #aee3fb 0%, #5bb8ec 55%, #2e8fd6 100%);
+  --g-text: #0d2b4e;
+  --g-muted: #14365c;
+  --g-panel: #ffffff;
+  --g-border: rgba(13, 43, 78, 0.12);
+  --g-accent: #f5821f;
+  --g-title: #0d2b4e;
+  --g-title-font: 'Baloo 2', sans-serif;
+}
+
+.globby--trivial {
+  --g-bg: linear-gradient(160deg, #2a0e54 0%, #4b1d8f 60%, #7b2ff7 100%);
+  --g-text: #ffffff;
+  --g-muted: rgba(255, 255, 255, 0.8);
+  --g-panel: rgba(255, 255, 255, 0.1);
+  --g-border: rgba(255, 255, 255, 0.18);
+  --g-accent: #ff4d8d;
+  --g-title: #ffffff;
+  --g-title-font: 'Montserrat', sans-serif;
+}

@@ -1,0 +1,109 @@
+/* Estil propi de la pàgina inicial (selector de jocs). No comparteix res amb
+   els jocs: el seu propi tema, fonts i fons que cobreix tot el viewport. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+.landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 48px 24px;
+  font-family: 'Poppins', system-ui, sans-serif;
+  color: #fff;
+  background: linear-gradient(135deg, #4f2bd6 0%, #8a2be2 45%, #ff2e8b 100%);
+}
+
+.landing-head {
+  text-align: center;
+}
+
+.landing-kicker {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.landing-title {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.landing-sub {
+  margin: 14px 0 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.landing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 760px;
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 32px 24px;
+  border: none;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.game-card:not(:disabled):hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.game-card--soon {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.game-emoji {
+  font-size: 3.4rem;
+  line-height: 1;
+}
+
+.game-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.game-tagline {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+.game-soon {
+  margin-top: 6px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.landing-foot {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}

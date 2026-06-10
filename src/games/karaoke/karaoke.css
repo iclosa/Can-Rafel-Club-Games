@@ -1,0 +1,88 @@
+/* Karaoke · estil propi (escenari fosc amb focus i lletra gran). */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap');
+
+.kar {
+  --neon: #18e0d8;
+  --neon2: #ff3db1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 22px 18px 40px;
+  font-family: 'Poppins', system-ui, sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at 50% 0%, #2a1247 0%, #140a24 55%, #05030a 100%);
+}
+
+.kar button { font-family: inherit; cursor: pointer; }
+
+.kar-back, .kar-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.kar-back { align-self: flex-start; }
+
+.kar-head { text-align: center; margin: 12px 0 24px; }
+.kar-kicker {
+  display: inline-block; text-transform: uppercase; letter-spacing: 0.28em;
+  font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.6); margin-bottom: 10px;
+}
+.kar-logo {
+  font-size: clamp(2.6rem, 9vw, 5rem); font-weight: 800; margin: 0; letter-spacing: 0.08em;
+  color: #fff; text-shadow: 0 0 10px var(--neon), 0 0 28px var(--neon2);
+}
+.kar-sub { color: rgba(255,255,255,0.75); margin: 12px 0 0; }
+
+.kar-panel {
+  width: 100%; max-width: 560px; background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 22px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.kar-msg { color: rgba(255,255,255,0.8); text-align: center; line-height: 1.5; }
+.kar-btn {
+  background: linear-gradient(135deg, var(--neon), var(--neon2)); color: #04121a;
+  border: none; border-radius: 14px; font-weight: 800; padding: 14px; font-size: 1.05rem;
+}
+
+.kar-search {
+  width: 100%; padding: 14px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.3); color: #fff; font-family: inherit; font-size: 1rem;
+}
+.kar-songlist { list-style: none; margin: 0; padding: 0; max-height: 55vh; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.kar-songlist button {
+  width: 100%; text-align: left; background: rgba(255,255,255,0.07); border: none; color: #fff;
+  border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column;
+}
+.kar-songlist button:hover { background: rgba(255,255,255,0.16); }
+.kar-song-title { font-weight: 700; }
+.kar-song-artist { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+
+/* Pantalla de cant */
+.kar--sing { padding: 0; }
+.kar-bar {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px; background: rgba(0,0,0,0.4); position: sticky; top: 0;
+}
+.kar-nowinfo { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.kar-nowinfo strong { font-size: 1.05rem; }
+.kar-nowinfo span { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+
+.kar-lyrics {
+  flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 30vh 20px 40vh;
+  text-align: center; overflow-y: auto;
+}
+.kar-line {
+  font-size: 1.5rem; font-weight: 700; margin: 14px 0; color: rgba(255,255,255,0.35);
+  transition: color 0.2s, transform 0.2s; line-height: 1.3;
+}
+.kar-line.past { color: rgba(255,255,255,0.25); }
+.kar-line.active {
+  color: #fff; transform: scale(1.12);
+  text-shadow: 0 0 12px var(--neon), 0 0 24px var(--neon2);
+}
+.kar-plain { white-space: pre-wrap; font-size: 1.2rem; line-height: 1.6; color: #fff; text-align: center; font-family: inherit; }

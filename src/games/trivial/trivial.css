@@ -1,0 +1,195 @@
+/* Trivial Party · estil propi (joc de preguntes tipus Kahoot). */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap');
+
+.triv {
+  --bg: #2a0e54;
+  --bg2: #4b1d8f;
+  --panel: rgba(255, 255, 255, 0.1);
+  --red: #e21b3c;
+  --blue: #1368ce;
+  --gold: #d89e00;
+  --green: #26890c;
+  min-height: 100vh;
+  padding: 22px 16px 60px;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  color: #fff;
+  background: linear-gradient(160deg, #2a0e54 0%, #4b1d8f 60%, #7b2ff7 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.triv button {
+  font-family: inherit;
+  border: none;
+  border-radius: 12px;
+  background: #ff4d8d;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 12px 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #c12b63;
+  transition: transform 0.1s, filter 0.15s;
+}
+.triv button:hover:not(:disabled) { filter: brightness(1.08); }
+.triv button:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 #c12b63; }
+.triv button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+.triv-back {
+  align-self: flex-start;
+  background: rgba(0, 0, 0, 0.3) !important;
+  box-shadow: none !important;
+  font-size: 0.85rem !important;
+  padding: 8px 14px !important;
+}
+
+.triv-head { text-align: center; }
+.triv-logo {
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 0.04em;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+.triv-logo--sm { font-size: clamp(1.4rem, 5vw, 2rem); }
+.triv-logo--xs { font-size: 1.3rem; }
+.triv-sub { color: rgba(255, 255, 255, 0.85); margin: 6px 0 0; }
+.triv-room { margin: 4px 0 0; font-weight: 700; }
+.triv-room strong { color: #ffd23f; letter-spacing: 0.12em; }
+.triv-muted { color: rgba(255, 255, 255, 0.75); }
+.triv-alert { background: rgba(255, 0, 0, 0.2); border: 1px solid #ff7a7a; border-radius: 10px; padding: 10px 16px; }
+
+/* Lobby */
+.triv-lobby {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: 720px;
+}
+.triv-panel { background: var(--panel); backdrop-filter: blur(8px); border-radius: 18px; padding: 20px; }
+.triv-panel h2 { margin: 0 0 12px; }
+.triv-qr { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.triv-qr-frame { background: #fff; padding: 8px; border-radius: 12px; line-height: 0; }
+.triv-hint { font-size: 0.9rem; margin: 12px 0; color: rgba(255,255,255,0.85); }
+.triv-code { display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.35); border-radius: 12px; padding: 8px 22px; }
+.triv-code span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; }
+.triv-code strong { font-size: 2rem; color: #ffd23f; letter-spacing: 0.12em; }
+.triv-teams { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.triv-teams li { background: rgba(0,0,0,0.25); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; }
+.triv-members { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+.triv-start { width: 100%; margin-top: 8px; background: #26890c !important; box-shadow: 0 4px 0 #1a5e08 !important; font-size: 1.1rem !important; padding: 15px !important; }
+
+/* Join */
+.triv--join { justify-content: center; }
+.triv-joinform { background: var(--panel); border-radius: 18px; padding: 22px; width: 100%; max-width: 360px; display: flex; flex-direction: column; }
+.triv-joinform label { font-weight: 700; margin: 8px 0 6px; }
+.triv-joinform input { padding: 13px; border-radius: 10px; border: none; font-family: inherit; font-size: 1.05rem; }
+.triv-tip { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin: 10px 0; }
+.triv-error { color: #ffb3b3; font-weight: 700; }
+
+/* Opcions (jugador: 2x2 de colors; host: files amples) */
+.triv-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 640px; }
+.triv-opts--play { gap: 12px; }
+.triv-opt {
+  border-radius: 14px; color: #fff; font-weight: 800; border: none;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 90px; font-size: 1.6rem; box-shadow: 0 5px 0 rgba(0,0,0,0.25);
+}
+.triv-opt--wide { justify-content: flex-start; min-height: 58px; font-size: 1.1rem; padding: 0 18px; text-align: left; }
+.triv-shape { font-size: 1.5rem; }
+.opt-red { background: var(--red); }
+.opt-blue { background: var(--blue); }
+.opt-gold { background: var(--gold); }
+.opt-green { background: var(--green); }
+.triv-opt.correct { outline: 4px solid #fff; transform: scale(1.02); }
+.triv-opt.dim { opacity: 0.4; }
+
+/* Host question card */
+.triv--host { gap: 14px; }
+.triv-qcard { background: #fff; color: #1a1040; border-radius: 18px; padding: 20px; width: 100%; max-width: 720px; box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.triv-qtop { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.triv-cat { background: #7b2ff7; color: #fff; font-weight: 800; padding: 4px 14px; border-radius: 999px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.triv-timer { font-size: 1.8rem; font-weight: 800; color: #e21b3c; }
+.triv-question { font-size: 1.5rem; margin: 0 0 16px; }
+.triv-qfoot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+
+/* Player */
+.triv--play { justify-content: center; }
+.triv-note { background: var(--panel); border-radius: 16px; padding: 22px; font-weight: 700; font-size: 1.15rem; text-align: center; width: 100%; max-width: 460px; }
+.triv-correct { font-weight: 700; margin: 12px 0 0; color: #ffd23f; }
+.triv-winner { background: var(--panel); border-radius: 18px; padding: 24px; font-size: 1.4rem; font-weight: 800; text-align: center; }
+
+/* Scoreboard */
+.triv-scoreboard { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 6px; }
+.triv-score-row { display: flex; align-items: center; gap: 12px; background: var(--panel); border-radius: 12px; padding: 10px 16px; }
+.triv-score-row.leader { background: rgba(255, 210, 63, 0.25); outline: 1px solid #ffd23f; }
+.triv-rank { font-weight: 800; opacity: 0.7; width: 22px; }
+.triv-tname { flex: 1; font-weight: 700; }
+.triv-pts { font-weight: 800; font-size: 1.2rem; color: #ffd23f; }
+
+/* Minijoc: cursa de cavalls */
+.horse-track { width: 100%; max-width: 720px; background: var(--panel); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.horse-lane { display: grid; grid-template-columns: 90px 1fr 42px; align-items: center; gap: 10px; }
+.horse-name { font-weight: 700; font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.horse-rail { position: relative; height: 30px; background: rgba(0,0,0,0.25); border-radius: 999px; }
+.horse { position: absolute; top: 2px; font-size: 1.5rem; transition: left 0.5s ease; }
+.horse-finish { position: absolute; right: 4px; top: 4px; font-size: 1.2rem; opacity: 0.8; }
+.horse-pos { font-weight: 800; font-size: 0.85rem; text-align: right; color: #ffd23f; }
+.triv-center { text-align: center; }
+.triv-note--mini { background: rgba(255,210,63,0.2); }
+
+/* Minijoc: penals */
+.pk { width: 100%; max-width: 520px; background: var(--panel); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.pk-round { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.8; margin: 0; }
+.pk-score { display: flex; gap: 12px; align-items: center; font-weight: 700; }
+.pk-score strong { color: #ffd23f; font-size: 1.3rem; }
+.pk-vs { opacity: 0.6; }
+.pk-turn { margin: 0; font-size: 0.95rem; }
+.pk-shot { opacity: 0.7; }
+.pk-goal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: rgba(255,255,255,0.08); border: 3px solid #fff; border-radius: 10px; padding: 10px; width: 100%; max-width: 320px; }
+.pk-zone { aspect-ratio: 1; border-radius: 10px !important; background: rgba(255,255,255,0.14) !important; box-shadow: none !important; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; padding: 0 !important; }
+.pk-zone:disabled { opacity: 1 !important; cursor: default; }
+.pk-zone:not(:disabled):hover { background: rgba(255,255,255,0.3) !important; }
+.pk-zone.shoot { background: #26890c !important; }
+.pk-zone.keep { background: #e21b3c !important; }
+.pk-lab { opacity: 0.55; }
+.pk-result { font-size: 1.6rem; font-weight: 800; margin: 4px 0; }
+.pk-result.goal { color: #4dff91; }
+.pk-result.save { color: #ff8a8a; }
+.pk-msg { font-weight: 600; margin: 0; }
+
+/* Minijoc: La bomba */
+.bomba { width: 100%; max-width: 480px; background: var(--panel); border-radius: 18px; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.bomba-cat { font-size: 1.2rem; margin: 0; }
+.bomba-cat strong { color: #ffd23f; }
+.bomba-ball { font-size: 4.5rem; line-height: 1; animation: bomba-shake 0.5s infinite; }
+.bomba-ball.mine { animation: bomba-shake 0.18s infinite; }
+@keyframes bomba-shake {
+  0%,100% { transform: rotate(-6deg) scale(1); }
+  50% { transform: rotate(6deg) scale(1.08); }
+}
+.bomba-holder { margin: 0; font-size: 1.05rem; }
+.bomba-holder strong { color: #ff4d8d; }
+.bomba-pass { background: #e21b3c !important; box-shadow: 0 4px 0 #a01228 !important; font-size: 1.3rem !important; padding: 18px 24px !important; }
+.bomba-alive { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.bomba-chip { background: rgba(255,255,255,0.12); border-radius: 999px; padding: 6px 14px; font-weight: 600; font-size: 0.9rem; }
+.bomba-chip.holder { background: #e21b3c; }
+
+/* Minijoc: emojis */
+.emoji-mg { width: 100%; max-width: 560px; background: var(--panel); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+.emoji-progress { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8; margin: 0; }
+.emoji-clue { font-size: 4rem; line-height: 1.1; }
+.emoji-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.emoji-opt { background: rgba(255,255,255,0.12) !important; color: #fff !important; box-shadow: none !important; border-radius: 12px !important; padding: 14px !important; font-size: 1rem; }
+.emoji-opt:not(:disabled):hover { background: rgba(255,255,255,0.25) !important; }
+.emoji-opt.correct { background: #26890c !important; }
+.emoji-opt.dim { opacity: 0.45; }
+.emoji-result { font-weight: 800; font-size: 1.2rem; margin: 4px 0; }
+
+/* Final */
+.triv-final { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 480px; }
+.triv-final-label { text-transform: uppercase; letter-spacing: 0.2em; margin: 0; opacity: 0.8; }
+.triv-final-name { font-size: 2.4rem; font-weight: 800; color: #ffd23f; margin: 0; }
