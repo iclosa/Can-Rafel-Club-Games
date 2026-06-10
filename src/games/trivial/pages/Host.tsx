@@ -128,21 +128,20 @@ export default function TrivialHost() {
       )}
 
       {/* MINIJOC: PENALS */}
-      {game?.status === 'playing' && isPenals && penals && (
-        phase === 'mg_penals_done' ? (
-          <div className="triv-qcard triv-center">
-            <h2 className="triv-question">⚽ Campió dels penals!</h2>
-            <p><strong>{champName(penals.champion)}</strong> (+1500)</p>
-            <button className="triv-start" onClick={next}>Continua la partida</button>
-          </div>
-        ) : (
-          <PenalsView
-            state={penals}
-            teams={teams}
-            mode="host"
-            onAdvance={() => game && penalsAdvance(game.id).catch((e) => console.error(e))}
-          />
-        )
+      {game?.status === 'playing' && phase === 'mg_penals_done' && (
+        <div className="triv-qcard triv-center">
+          <h2 className="triv-question">⚽ Campió dels penals!</h2>
+          <p><strong>{champName(penals?.champion ?? teams[0]?.id)}</strong> (+1500)</p>
+          <button className="triv-start" onClick={next}>Continua la partida</button>
+        </div>
+      )}
+      {game?.status === 'playing' && phase === 'mg_penals' && penals && (
+        <PenalsView
+          state={penals}
+          teams={teams}
+          mode="host"
+          onAdvance={() => game && penalsAdvance(game.id).catch((e) => console.error(e))}
+        />
       )}
 
       {/* MINIJOC: LA BOMBA */}

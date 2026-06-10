@@ -1,6 +1,9 @@
 import type { PenalsState, TrivialTeam } from './types'
 
+// 7 zones col·locades com una porteria 3×3 (centre i baix-centre buits).
 const ZONE_LABELS = ['↖', '↑', '↗', '←', '→', '↙', '↘']
+// Posicions a la graella 3×3: número = índex de zona; null = cel·la buida.
+const GRID: (number | null)[] = [0, 1, 2, 3, null, 4, 5, null, 6]
 
 interface Props {
   state: PenalsState
@@ -14,7 +17,7 @@ interface Props {
 export default function PenalsView({ state, teams, mode, myTeamId, onChoose, onAdvance }: Props) {
   const name = (id: string | null) => teams.find((t) => t.id === id)?.name ?? '—'
   const m = state.matches[state.mi]
-  if (!m) return null
+  if (!m) return <p className="pk-msg">Preparant el duel…</p>
   const shooterId = state.shooterIsA ? m.a : m.b
   const keeperId = state.shooterIsA ? m.b : m.a
   const isResult = state.duelPhase === 'result'
@@ -27,7 +30,7 @@ export default function PenalsView({ state, teams, mode, myTeamId, onChoose, onA
         : null
   const myChosen =
     (myRole === 'shooter' && state.shoot != null) || (myRole === 'keeper' && state.keep != null)
-  const canPick = mode === 'player' && myRole && !myChosen && !isResult
+  const canPick = mode === 'player' && !!myRole && !myChosen && !isResult
 
   return (
     <div className="pk">
@@ -39,29 +42,28 @@ export default function PenalsView({ state, teams, mode, myTeamId, onChoose, onA
       </div>
       <p className="pk-turn">
         ⚽ <strong>{name(shooterId)}</strong> xuta · 🧤 <strong>{name(keeperId)}</strong> para
-        <span className="pk-shot"> (xut {state.shotNo + (isResult ? 0 : 1)})</span>
       </p>
 
       <div className="pk-goal">
-        {ZONE_LABELS.map((lab, i) => {
-          const shootHere = isResult && state.shoot === i
-          const keepHere = isResult && state.keep === i
+        {GRID.map((z, cell) => {
+          if (z === null) return <span key={`e${cell}`} className="pk-empty" />
+          const shootHere = isResult && state.shoot === z
+          const keepHere = isResult && state.keep === z
           return (
             <button
-              key={i}
+              key={z}
               className={`pk-zone${shootHere ? ' shoot' : ''}${keepHere ? ' keep' : ''}`}
               disabled={!canPick}
-              onClick={() => canPick && onChoose?.(i)}
+              onClick={() => canPick && onChoose?.(z)}
             >
               {shootHere && '⚽'}
               {keepHere && '🧤'}
-              {!shootHere && !keepHere && <span className="pk-lab">{lab}</span>}
+              {!shootHere && !keepHere && <span className="pk-lab">{ZONE_LABELS[z]}</span>}
             </button>
           )
         })}
       </div>
 
-      {/* Estat / accions */}
       {isResult ? (
         <>
           <p className={`pk-result ${state.lastResult?.goal ? 'goal' : 'save'}`}>

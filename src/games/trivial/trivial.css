@@ -151,7 +151,8 @@
 .pk-vs { opacity: 0.6; }
 .pk-turn { margin: 0; font-size: 0.95rem; }
 .pk-shot { opacity: 0.7; }
-.pk-goal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: rgba(255,255,255,0.08); border: 3px solid #fff; border-radius: 10px; padding: 10px; width: 100%; max-width: 320px; }
+.pk-goal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: rgba(255,255,255,0.08); border: 4px solid #fff; border-bottom-width: 6px; border-radius: 8px; padding: 10px; width: 100%; max-width: 300px; aspect-ratio: 3 / 2; }
+.pk-empty { aspect-ratio: 1; }
 .pk-zone { aspect-ratio: 1; border-radius: 10px !important; background: rgba(255,255,255,0.14) !important; box-shadow: none !important; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; padding: 0 !important; }
 .pk-zone:disabled { opacity: 1 !important; cursor: default; }
 .pk-zone:not(:disabled):hover { background: rgba(255,255,255,0.3) !important; }
