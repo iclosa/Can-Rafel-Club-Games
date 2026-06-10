@@ -1,49 +1,68 @@
-# HITSTER by Club Can Rafel
+# Can Rafel Club Games
 
-Joc multijugador estil Kahoot inspirat en **Hitster**: els jugadors escolten cançons i intenten col·locar-les en l'ordre cronològic correcte dins de la seva línia temporal personal.
+Col·lecció de jocs de festa multijugador del **Club Esportiu Can Rafel**. Des de la
+pàgina inicial es tria un joc; cada joc té el seu propi estil i pantalla d'amfitrió
+(projector/TV) + mòbils dels jugadors.
+
+## Jocs
+
+- **🎵 Hitster** — escolta una cançó i col·loca-la a la línia temporal segons l'any.
+  Equips, comodins/fitxes, robatori i bonus d'artista+cançó.
+- **🎱 Bingo Musical** — híbrid: cartró digital al mòbil **i** cartrons imprimibles
+  (PDF); l'amfitrió fa de "bombo" amb Spotify. Línia i bingo.
+- **🧠 Trivial Party** — equips, 7 rondes de preguntes per categories (puntuació per
+  rapidesa) + 3 minijocs aleatoris d'un pool: cursa de cavalls, penals, la bomba i
+  endevina amb emojis.
+- **🎤 Karaoke** — tria una cançó (Spotify) i canta-la amb la **lletra sincronitzada**
+  (lrclib.net).
 
 ## Stack
 
-- **Vite + React + TypeScript**
-- **react-router-dom** per a la navegació entre pantalles (Home / Host / Player)
-- **Supabase Realtime** per a la comunicació en temps real (broadcast + presence en canals per sala)
+- **Vite + React + TypeScript** (`react-router-dom`)
+- **Supabase** — Postgres (font de veritat), Realtime (`postgres_changes`) i funcions
+  PL/pgSQL (RPCs) per a la lògica de joc.
+- **Spotify Web Playback SDK** per reproduir cançons senceres (l'amfitrió necessita
+  compte Premium).
 
 ## Posada en marxa
 
 ```bash
 npm install
-cp .env.example .env   # omple VITE_SUPABASE_URL i VITE_SUPABASE_ANON_KEY
-npm run dev
+cp .env.example .env   # omple els valors (veure sota)
+npm run dev            # serveix per HTTPS a la LAN (cal per a Spotify i els QR)
 ```
 
-Obre `http://localhost:5173`. Des de la pantalla principal:
+Variables d'entorn (`.env`):
 
-- A `/` es genera automàticament un codi de sala i es mostra el QR perquè els jugadors s'uneixin.
-- Els jugadors escanegen el QR i entren a `/join/<codi>` per introduir el seu nom.
-- L'amfitrió comença la partida i navega a `/host/<codi>`.
+```
+VITE_SUPABASE_URL=...          # Supabase → Settings → API
+VITE_SUPABASE_ANON_KEY=...     # clau publishable / anon
+VITE_SPOTIFY_CLIENT_ID=...     # developer.spotify.com → la teva app
+VITE_MAX_PLAYERS=8             # límit de jugadors al Trivial (buit = sense límit)
+```
+
+> Spotify: afegeix els **Redirect URIs** `https://localhost:5173/callback`, el de la
+> IP de LAN i el del desplegament (`https://<projecte>.vercel.app/callback`).
 
 ## Estructura
 
 ```
 src/
-  lib/
-    supabase.ts       # client de Supabase
-    roomCode.ts       # generació de codis de sala
-  hooks/
-    useRoom.ts        # hook de sala (presence + broadcast)
-  pages/
-    Home.tsx          # lobby amb QR i llista de jugadors
-    Join.tsx          # pantalla mòbil per a jugadors
-    Host.tsx          # vista de l'amfitrió durant la partida
-    Player.tsx        # vista del jugador durant la partida
-  types/
-    game.ts           # tipus compartits
-  App.tsx             # router
+  landing/            # menú de selecció de joc
+  shared/             # infra comuna: supabase, spotify, useGameLobby, gamesCatalog…
+  games/
+    hitster/          # cada joc: pages/, components/, hooks/, services/, <joc>.css
+    bingo/
+    trivial/
+    karaoke/
+supabase/             # esquema SQL de referència
 ```
 
-## Pròxims passos
+Cada joc porta el seu prefix de ruta (`/hitster`, `/bingo`, `/trivial`, `/karaoke`)
+i el seu estil propi; els lobbys comparteixen dimensions (`shared/GameLobby`).
 
-1. Carregar un catàleg de cançons (Spotify / Deezer / mock local) amb `previewUrl` i `year`.
-2. Lògica de rondes a `Host.tsx`: emetre `new_song`, rebre `guess`, calcular puntuació.
-3. UI de línia temporal arrossegable a `Player.tsx`.
-4. Persistir partides en una taula de Supabase per a historial i rànquing.
+## Desplegament
+
+SPA a Vercel (preset **Vite**, output `dist`). El `vercel.json` afegeix les *rewrites*
+a `index.html` perquè les rutes del client i el `/callback` de Spotify funcionin amb
+enllaços directes i QR. Recorda configurar les variables d'entorn al projecte de Vercel.
