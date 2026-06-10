@@ -145,22 +145,22 @@ export default function TrivialHost() {
       )}
 
       {/* MINIJOC: LA BOMBA */}
-      {game?.status === 'playing' && isBomba && bomba && (
-        phase === 'mg_bomba_done' ? (
-          <div className="triv-qcard triv-center">
-            <h2 className="triv-question">💣 Sobreviu!</h2>
-            <p>Guanya <strong>{champName(bomba.champion)}</strong> (+1500)</p>
-            <button className="triv-start" onClick={next}>Continua la partida</button>
-          </div>
-        ) : phase === 'mg_bomba_boom' ? (
-          <div className="triv-qcard triv-center">
-            <h2 className="triv-question">💥 BOOM!</h2>
-            <p>Eliminat: <strong>{champName(bomba.loser)}</strong></p>
-            <button className="triv-start" onClick={() => game && bombaRearm(game.id)}>Continua</button>
-          </div>
-        ) : (
-          <BombaView state={bomba} teams={teams} mode="host" />
-        )
+      {game?.status === 'playing' && phase === 'mg_bomba_done' && (
+        <div className="triv-qcard triv-center">
+          <h2 className="triv-question">💣 Sobreviu!</h2>
+          <p>Guanya <strong>{champName(bomba?.champion ?? teams[0]?.id)}</strong> (+1500)</p>
+          <button className="triv-start" onClick={next}>Continua la partida</button>
+        </div>
+      )}
+      {game?.status === 'playing' && phase === 'mg_bomba_boom' && (
+        <div className="triv-qcard triv-center">
+          <h2 className="triv-question">💥 BOOM!</h2>
+          <p>Eliminat: <strong>{champName(bomba?.loser ?? null)}</strong></p>
+          <button className="triv-start" onClick={() => game && bombaRearm(game.id)}>Continua</button>
+        </div>
+      )}
+      {game?.status === 'playing' && phase === 'mg_bomba' && bomba && (
+        <BombaView state={bomba} teams={teams} mode="host" />
       )}
 
       {/* MINIJOC: ENDEVINA AMB EMOJIS */}
