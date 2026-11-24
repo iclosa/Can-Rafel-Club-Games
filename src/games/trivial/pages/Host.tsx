@@ -15,6 +15,7 @@ import type { TrivialTeam } from '../types'
 import PenalsView from '../PenalsView'
 import BombaView from '../BombaView'
 import EmojiView from '../EmojiView'
+import { categoryColor, categoryStyle } from '../categories'
 
 const COLORS = ['opt-red', 'opt-blue', 'opt-gold', 'opt-green']
 const SHAPES = ['▲', '◆', '●', '■']
@@ -172,7 +173,12 @@ export default function TrivialHost() {
                   ? '💣 Minijoc · La bomba'
                   : isEmoji
                     ? '😀 Minijoc · Endevina amb emojis'
-                    : `Ronda ${game.q_number}/${game.total_rounds}`}
+                    : (
+                      <span className="triv-round">
+                        Ronda <strong>{game.q_number}</strong>
+                        <span className="triv-round-total">/{game.total_rounds}</span>
+                      </span>
+                    )}
           </p>
         )}
       </header>
@@ -256,7 +262,9 @@ export default function TrivialHost() {
             question && (
               <div className="triv-qcard">
                 <div className="triv-qtop">
-                  <span className="triv-cat">Pregunta ràpida · {question.category}</span>
+                  <span className="triv-cat" style={categoryStyle(question.category)}>
+                    Pregunta ràpida · {question.category}
+                  </span>
                   {isHorseQ && <span className="triv-timer">{remaining}s</span>}
                 </div>
                 <h2 className="triv-question">{question.text}</h2>
@@ -288,9 +296,11 @@ export default function TrivialHost() {
       {/* PREGUNTES NORMALS */}
       {game?.status === 'playing' && !isMinigame && question && (
         <>
-          <div className="triv-qcard">
+          <div className="triv-qcard" style={{ borderTop: `6px solid ${categoryColor(question.category).bg}` }}>
             <div className="triv-qtop">
-              <span className="triv-cat">{question.category} · pregunta {game?.round_q}/4</span>
+              <span className="triv-cat" style={categoryStyle(question.category)}>
+                {question.category} · pregunta {game?.round_q}/4
+              </span>
               {isQuestion && <span className="triv-timer">{remaining}s</span>}
             </div>
             <h2 className="triv-question">{question.text}</h2>

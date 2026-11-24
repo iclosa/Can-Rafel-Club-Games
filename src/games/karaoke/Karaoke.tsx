@@ -5,6 +5,7 @@ import { useSpotifyAuth } from '../../shared/useSpotifyAuth'
 import { useSpotifyPlayer } from '../../shared/useSpotifyPlayer'
 import { fetchKaraokeSongs, type KSong } from './karaokeService'
 import { fetchLyrics, type Lyrics } from './lrclib'
+import HowToPlay from '../../shared/HowToPlay'
 
 export default function Karaoke() {
   const navigate = useNavigate()
@@ -172,6 +173,7 @@ function Shell({ children, onBack }: { children: React.ReactNode; onBack: () => 
         <span className="kar-kicker">Club Esportiu Can Rafel</span>
         <h1 className="kar-logo">KARAOKE</h1>
         <p className="kar-sub">Tria una cançó i canta-la amb la lletra a pantalla</p>
+        <HowToPlay gameId="karaoke" />
       </header>
       <div className="kar-panel">{children}</div>
     </div>

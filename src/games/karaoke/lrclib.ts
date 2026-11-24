@@ -10,7 +10,7 @@ export interface Lyrics {
 
 const TAG = /\[(\d+):(\d+(?:\.\d+)?)\]/g
 
-function parseLrc(lrc: string): LyricLine[] {
+export function parseLrc(lrc: string): LyricLine[] {
   const out: LyricLine[] = []
   for (const raw of lrc.split('\n')) {
     const text = raw.replace(TAG, '').trim()

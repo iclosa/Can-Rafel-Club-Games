@@ -58,6 +58,23 @@
 .triv-sub { color: rgba(255, 255, 255, 0.85); margin: 6px 0 0; }
 .triv-room { margin: 4px 0 0; font-weight: 700; }
 .triv-room strong { color: #ffd23f; letter-spacing: 0.12em; }
+/* Número de ronda destacat (pantalla gran) */
+.triv-round {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 6px 22px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid #ffd23f;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.triv-round strong { font-size: 2.2rem; line-height: 1; letter-spacing: 0; }
+.triv-round-total { color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; }
 .triv-muted { color: rgba(255, 255, 255, 0.75); }
 .triv-alert { background: rgba(255, 0, 0, 0.2); border: 1px solid #ff7a7a; border-radius: 10px; padding: 10px 16px; }
 

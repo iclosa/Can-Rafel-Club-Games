@@ -2,6 +2,7 @@ import './globby.css'
 import type { ReactNode } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useNavigate } from 'react-router-dom'
+import HowToPlay from './HowToPlay'
 
 interface Props {
   theme: 'hitster' | 'bingo' | 'trivial'
@@ -38,6 +39,7 @@ export default function GameLobby({
         <span className="globby-kicker">Club Esportiu Can Rafel</span>
         <h1 className="globby-title">{title}</h1>
         <p className="globby-sub">{subtitle}</p>
+        <HowToPlay gameId={theme} />
       </header>
 
       {alert}
