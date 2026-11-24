@@ -2,6 +2,7 @@ import '../hitster.css'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { handleSpotifyCallback } from '../lib/spotify/auth'
+import { errorMessage } from '../../../shared/errorMessage'
 
 // Llegeix els paràmetres de retorn de l'OAuth de forma síncrona (fora de l'efecte).
 function readCallbackParams(): { code: string | null; error: string | null } {
@@ -31,7 +32,7 @@ export default function Callback() {
         sessionStorage.removeItem('hitster:returnTo')
         navigate(back, { replace: true })
       })
-      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
+      .catch((e) => setError(errorMessage(e)))
   }, [code, navigate])
 
   return (

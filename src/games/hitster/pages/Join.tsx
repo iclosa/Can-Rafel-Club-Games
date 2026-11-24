@@ -2,6 +2,7 @@ import '../hitster.css'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { joinGame, NicknameTakenError } from '../services/gameService'
+import { errorMessage } from '../../../shared/errorMessage'
 
 export default function Join() {
   const { code } = useParams<{ code: string }>()
@@ -20,7 +21,7 @@ export default function Join() {
       navigate(`/hitster/play/${code}`)
     } catch (e) {
       if (e instanceof NicknameTakenError) setError('Aquest nom d\'equip ja s\'està utilitzant.')
-      else setError(e instanceof Error ? e.message : String(e))
+      else setError(errorMessage(e))
       setBusy(false)
     }
   }

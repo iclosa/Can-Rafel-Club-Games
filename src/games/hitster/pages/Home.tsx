@@ -6,6 +6,7 @@ import { generateRoomCode } from '../lib/roomCode'
 import { useGameSync } from '../hooks/useGameSync'
 import { isSupabaseConfigured } from '../lib/supabase'
 import { createGame, startGame } from '../services/gameService'
+import { errorMessage } from '../../../shared/errorMessage'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ export default function Home() {
         localStorage.setItem(`hitster:hostId:${code}`, hostId)
         setCreating(false)
       })
-      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
+      .catch((e) => setError(errorMessage(e)))
   }, [code])
 
   const start = () => {
@@ -36,7 +37,7 @@ export default function Home() {
     startGame(game.id)
       .then(() => navigate(`/hitster/host/${code}`))
       .catch((e) => {
-        setError(e instanceof Error ? e.message : String(e))
+        setError(errorMessage(e))
         setStarting(false)
       })
   }

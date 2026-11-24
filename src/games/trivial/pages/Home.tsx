@@ -6,6 +6,7 @@ import { generateRoomCode } from '../../../shared/roomCode'
 import { isSupabaseConfigured } from '../../../shared/supabase'
 import { useTrivialSync } from '../useTrivialSync'
 import { createTrivialGame, startTrivial } from '../trivialService'
+import { errorMessage } from '../../../shared/errorMessage'
 
 export default function TrivialHome() {
   const navigate = useNavigate()
@@ -24,14 +25,14 @@ export default function TrivialHome() {
         localStorage.setItem(`trivial:hostId:${code}`, hostId)
         setCreating(false)
       })
-      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
+      .catch((e) => setError(errorMessage(e)))
   }, [code])
 
   const start = () => {
     if (!game) return
     startTrivial(game.id)
       .then(() => navigate(`/trivial/host/${code}`))
-      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
+      .catch((e) => setError(errorMessage(e)))
   }
 
   return (

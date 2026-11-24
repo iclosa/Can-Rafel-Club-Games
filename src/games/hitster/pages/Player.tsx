@@ -5,6 +5,7 @@ import { useGameSync } from '../hooks/useGameSync'
 import { StealTakenError, submitBonus, submitGuess, submitSteal } from '../services/gameService'
 import { playCorrect, playWrong } from '../lib/sfx'
 import Timeline from '../components/Timeline'
+import { errorMessage } from '../../../shared/errorMessage'
 
 export default function PlayerView() {
   const { code } = useParams<{ code: string }>()
@@ -49,7 +50,7 @@ export default function PlayerView() {
       setUsedJoker(false)
       setShowYear(false)
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(errorMessage(e))
     } finally {
       setSubmitting(false)
     }
@@ -88,7 +89,7 @@ export default function PlayerView() {
       setBonusArtist('')
       setBonusTitle('')
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(errorMessage(e))
     } finally {
       setBonusBusy(false)
     }

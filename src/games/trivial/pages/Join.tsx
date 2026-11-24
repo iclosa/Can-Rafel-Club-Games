@@ -2,6 +2,7 @@ import '../trivial.css'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { joinTrivial } from '../trivialService'
+import { errorMessage } from '../../../shared/errorMessage'
 
 export default function TrivialJoin() {
   const { code } = useParams<{ code: string }>()
@@ -19,7 +20,7 @@ export default function TrivialJoin() {
       localStorage.setItem(`trivial:teamId:${code}`, teamId)
       navigate(`/trivial/play/${code}`)
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(errorMessage(e))
       setBusy(false)
     }
   }

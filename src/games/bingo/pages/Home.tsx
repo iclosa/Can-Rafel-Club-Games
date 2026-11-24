@@ -6,6 +6,7 @@ import { generateRoomCode } from '../../../shared/roomCode'
 import { isSupabaseConfigured } from '../../../shared/supabase'
 import { useBingoSync } from '../useBingoSync'
 import { createBingoGame, generateBingoCards, startBingo } from '../bingoService'
+import { errorMessage } from '../../../shared/errorMessage'
 
 export default function BingoHome() {
   const navigate = useNavigate()
@@ -27,7 +28,7 @@ export default function BingoHome() {
         localStorage.setItem(`bingo:hostId:${code}`, hostId)
         setCreating(false)
       })
-      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
+      .catch((e) => setError(errorMessage(e)))
   }, [code])
 
   const makeCards = async () => {
@@ -37,7 +38,7 @@ export default function BingoHome() {
       await generateBingoCards(game.id, cardCount)
       navigate(`/bingo/print/${code}`)
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(errorMessage(e))
     } finally {
       setGenerating(false)
     }
@@ -49,7 +50,7 @@ export default function BingoHome() {
       await startBingo(game.id)
       navigate(`/bingo/host/${code}`)
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
+      setError(errorMessage(e))
     }
   }
 
